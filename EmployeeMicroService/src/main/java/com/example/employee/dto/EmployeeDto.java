@@ -22,6 +22,4 @@ public class EmployeeDto implements Serializable {
 
 	private List<AddressDto> addresses=new ArrayList<>();
 
-	
-
 }

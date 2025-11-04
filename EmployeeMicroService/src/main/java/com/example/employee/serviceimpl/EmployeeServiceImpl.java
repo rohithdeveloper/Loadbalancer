@@ -92,9 +92,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     }
 
-//    public EmployeeDto getEmployeeByIdFallback(long id, Throwable ex) {
-//        throw new ServiceUnavailableException("Server problem, please try after sometime");
-//    }
 
     public EmployeeDto getEmployeeByIdFallback(long id, Throwable ex) {
         log.error("⚠️ Fallback triggered for employee {} due to: {}", id, ex.toString(), ex);

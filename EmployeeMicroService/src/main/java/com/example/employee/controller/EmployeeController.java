@@ -47,6 +47,7 @@ public class EmployeeController {
     }
 }
 
+
 //for cache put use @CachPut(value,key)
 //for cache put use @CachEvict(value,key)
 //Types of Caching
