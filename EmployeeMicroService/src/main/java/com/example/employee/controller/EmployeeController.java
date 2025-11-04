@@ -30,7 +30,8 @@ public class EmployeeController {
 
     @GetMapping("/employees/{id}")
     public EmployeeDto getUserById(@PathVariable("id") long empId) throws Exception {
-        return empService.getEmployeeById(empId);
+        EmployeeDto empDto = empService.getEmployeeById(empId);
+        return empDto;
     }
 
     @GetMapping("/employees")
@@ -45,3 +46,8 @@ public class EmployeeController {
         return empService.getAllEmployees();
     }
 }
+
+//for cache put use @CachPut(value,key)
+//for cache put use @CachEvict(value,key)
+//Types of Caching
+//1. InMemory: Cache will be created indside memory of your application uses concurrentHashMap (Heap Memory)

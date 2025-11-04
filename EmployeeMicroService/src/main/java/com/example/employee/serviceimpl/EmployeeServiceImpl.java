@@ -22,6 +22,7 @@ import com.example.employee.model.Employee;
 import com.example.employee.modelmapper.UserMapper;
 import com.example.employee.repository.EmployeeRepository;
 import com.example.employee.service.EmployeeService;
+import org.springframework.cache.annotation.Cacheable;
 
 @Service
 @Slf4j
@@ -55,6 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @CircuitBreaker(name = EMPLOYEE_SERVICE, fallbackMethod = "getEmployeeByIdFallback")
+    @Cacheable(value = "employee", key = "#id")
     public EmployeeDto getEmployeeById(long id) throws Exception {
         log.info("Fetching employee with ID: {}", id);
         Optional<Employee> employee = empRepo.findById(id);
@@ -91,20 +93,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
 //    public EmployeeDto getEmployeeByIdFallback(long id, Throwable ex) {
-//        log.warn("Circuit breaker fallback executed for employee ID: {}, cause: {}", id, ex.getMessage());
-//        EmployeeDto empDto = new EmployeeDto();
-//        empDto.setEmpId(id);
-//        empDto.setFirstName("Default");
-//        empDto.setLastName("Employee");
-//        empDto.setEmailId("default@example.com");
-//        empDto.setBranch("Default Branch");
-//        empDto.setAddresses(new ArrayList<>());
-//        log.info("Returning default employee data for ID: {}", id);
-//        return empDto;
+//        throw new ServiceUnavailableException("Server problem, please try after sometime");
 //    }
 
     public EmployeeDto getEmployeeByIdFallback(long id, Throwable ex) {
+        log.error("⚠️ Fallback triggered for employee {} due to: {}", id, ex.toString(), ex);
         throw new ServiceUnavailableException("Server problem, please try after sometime");
     }
+
 
 }
